@@ -6,11 +6,11 @@ const mimeType = "audio/webm";
 
 export default function AudioRecorder () {
 	const [permission, setPermission] = React.useState(false);
-	const mediaRecorder = React.useRef(null);
+	const mediaRecorder = React.useRef<MediaRecorder|null>(null);
 	const [recordingStatus, setRecordingStatus] = React.useState("inactive");
-	const [stream, setStream] = React.useState(null);
-	const [audio, setAudio] = React.useState(null);
-	const [audioChunks, setAudioChunks] = React.useState([]);
+	const [stream, setStream] = React.useState<MediaStream|null>(null);
+	const [audio, setAudio] = React.useState<string|null>(null);
+	const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -21,8 +21,8 @@ export default function AudioRecorder () {
 				});
 				setPermission(true);
 				setStream(mediaStream);
-			} catch (err) {
-				alert(err.message);
+			} catch (err: any) {
+				alert(`Error: ${err.message}`);
 			}
 		} else {
 			alert("The MediaRecorder API is not supported in your browser.");
@@ -31,13 +31,15 @@ export default function AudioRecorder () {
 
 	const startRecording = async () => {
 		setRecordingStatus("recording");
-		const media = new MediaRecorder(stream, { type: mimeType });
+		if (!stream) return;
 
+		const media = new MediaRecorder(stream, { mimeType: mimeType });
+
+		if (!mediaRecorder.current) return;
 		mediaRecorder.current = media;
-
 		mediaRecorder.current.start();
 
-		let localAudioChunks = [];
+		let localAudioChunks: Blob[] = [];
 
 		mediaRecorder.current.ondataavailable = (event) => {
 			if (typeof event.data === "undefined") return;
@@ -50,14 +52,16 @@ export default function AudioRecorder () {
 
 	const stopRecording = () => {
 		setRecordingStatus("inactive");
-		mediaRecorder.current.stop();
+		if (mediaRecorder.current) {
+			mediaRecorder.current.stop();
 
-		mediaRecorder.current.onstop = () => {
-			const audioBlob = new Blob(audioChunks, { type: mimeType });
-			const audioUrl = URL.createObjectURL(audioBlob);
-			setAudio(audioUrl);
-			setAudioChunks([]);
-		};
+			mediaRecorder.current.onstop = () => {
+				const audioBlob = new Blob(audioChunks, { type: mimeType });
+				const audioUrl = URL.createObjectURL(audioBlob);
+				setAudio(audioUrl);
+				setAudioChunks([]);
+			};
+		}
 	};
 
 	return (
@@ -67,18 +71,18 @@ export default function AudioRecorder () {
 			</header>
 
 			<section className="py-4">
-				<section className="audio-controls">
+				<section className="">
 					{permission || <button className="button" onClick={getMicrophonePermission} type="button">Get Microphone</button>}
 					{permission && recordingStatus === "inactive" && <button className="button" onClick={startRecording} type="button">Start Recording</button>}
 					{recordingStatus === "recording" && <button className="button" onClick={stopRecording} type="button">Stop Recording</button>}
 				</section>
 			</section>
 
-			{audio && <footer className="audio-player">
+			{audio && <footer className="">
 				<audio src={audio} controls className="mx-auto"></audio>
-				<div>
-					<a className="button" download href={audio} className="">Download Recording</a>
-				</div>
+				<section>
+					<a className="button" download href={audio}>Download Recording</a>
+				</section>
 			</footer>}
 		</section>
 	);
