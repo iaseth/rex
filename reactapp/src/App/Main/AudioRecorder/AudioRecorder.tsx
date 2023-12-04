@@ -34,8 +34,6 @@ export default function AudioRecorder () {
 		if (!stream) return;
 
 		const media = new MediaRecorder(stream, { mimeType: mimeType });
-
-		if (!mediaRecorder.current) return;
 		mediaRecorder.current = media;
 		mediaRecorder.current.start();
 
