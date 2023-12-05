@@ -8,7 +8,7 @@ interface MainProps {
 export default function Main ({}: MainProps) {
 
 	return (
-		<main className="min-h-screen px-2 py-4 bg-zinc-100 text-center">
+		<main className="min-h-screen bg-zinc-200">
 			<AudioRecorder />
 		</main>
 	);

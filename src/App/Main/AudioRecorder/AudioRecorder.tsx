@@ -95,12 +95,12 @@ export default function AudioRecorder () {
 
 	return (
 		<section>
-			<header>
-				<h2>Audio Recorder</h2>
+			<header className="bg-blue-500 text-white px-3 py-6 text-center">
+				<h3>Audio Recorder</h3>
 			</header>
 
-			<section className="max-w-5xl mx-auto py-4">
-				<section className="">
+			<section className="bg-white">
+				<section className="max-w-5xl mx-auto px-3 py-6">
 					{permission || <button className="button" onClick={getMicrophonePermission} type="button">Get Mic</button>}
 					{permission && recordingStatus === "inactive" && <button className="button" onClick={giveUpMicrophonePermission} type="button">Give Up Mic</button>}
 
@@ -109,11 +109,13 @@ export default function AudioRecorder () {
 				</section>
 			</section>
 
-			<footer className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-				{recordedAudios.map(audio => <AudioPlayer key={audio.startTimeMs}
-					audio={audio}
-					deleteRecording={() => deleteRecording(audio.startTimeMs)}
-				/>)}
+			<footer className="bg-zinc-200">
+				<section className="max-w-5xl mx-auto px-3 py-6 grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+					{recordedAudios.map(audio => <AudioPlayer key={audio.startTimeMs}
+						audio={audio}
+						deleteRecording={() => deleteRecording(audio.startTimeMs)}
+					/>)}
+				</section>
 			</footer>
 		</section>
 	);
