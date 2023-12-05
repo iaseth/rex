@@ -1,6 +1,7 @@
 import React from "react";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
 import { AudioRecording } from "../../../data/data";
+import { getTimeName } from "timenames";
 
 const mimeType = "audio/webm";
 
@@ -76,6 +77,7 @@ export default function AudioRecorder () {
 				setRecordedAudios(audios => [...audios, {
 					blobSize, startTimeMs, endTimeMs,
 					lengthMs: endTimeMs - startTimeMs,
+					name: getTimeName(startTimeMs),
 					url: audioURL
 				}]);
 				setAudioChunks([]);

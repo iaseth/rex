@@ -12,8 +12,9 @@ export default function AudioPlayer ({
 }: AudioPlayerProps) {
 	return (
 		<section className="px-3 py-3 bg-white border border-zinc-300 rounded">
-			<header>
-				<h4>Audio Recording</h4>
+			<header className="py-3">
+				<h5>Audio Recording</h5>
+				<h4>{audio.name}</h4>
 				<audio src={audio.url} controls className="mx-auto"></audio>
 			</header>
 
