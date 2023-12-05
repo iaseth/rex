@@ -19,5 +19,5 @@ h6, .h6, .p6 { @apply text-xs; }
 .H6, .P6 { @apply text-3xl; }
 
 .button {
-	@apply block font-bold bg-rose-600 text-white text-center px-8 py-4 rounded shadow;
+	@apply block font-bold bg-blue-600 text-white text-center px-8 py-4 rounded shadow;
 }

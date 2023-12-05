@@ -83,7 +83,7 @@ export default function AudioRecorder () {
 				<h2>Audio Recorder</h2>
 			</header>
 
-			<section className="py-4">
+			<section className="max-w-5xl mx-auto py-4">
 				<section className="">
 					{permission || <button className="button" onClick={getMicrophonePermission} type="button">Get Microphone</button>}
 					{permission && recordingStatus === "inactive" && <button className="button" onClick={startRecording} type="button">Start Recording</button>}
@@ -91,7 +91,7 @@ export default function AudioRecorder () {
 				</section>
 			</section>
 
-			<footer className="">
+			<footer className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-2">
 				{recordedAudios.map((audio, k) => <AudioPlayer key={k} {...{audio}} />)}
 			</footer>
 		</section>
