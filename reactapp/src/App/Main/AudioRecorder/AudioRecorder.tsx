@@ -1,5 +1,6 @@
 import React from "react";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
+import { AudioRecording } from "../../../data/data";
 
 const mimeType = "audio/webm";
 
@@ -12,7 +13,7 @@ export default function AudioRecorder () {
 	const [stream, setStream] = React.useState<MediaStream|null>(null);
 	const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
 
-	const [audioURLs, setAudioURLs] = React.useState<string[]>([]);
+	const [recordedAudios, setRecordedAudios] = React.useState<AudioRecording[]>([]);
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -58,7 +59,7 @@ export default function AudioRecorder () {
 			mediaRecorder.current.onstop = () => {
 				const audioBlob = new Blob(audioChunks, { type: mimeType });
 				const audioURL = URL.createObjectURL(audioBlob);
-				setAudioURLs(a => [...a, audioURL]);
+				setRecordedAudios(a => [...a, {lengthMs: 0, url: audioURL}]);
 				setAudioChunks([]);
 			};
 		}
@@ -79,7 +80,7 @@ export default function AudioRecorder () {
 			</section>
 
 			<footer className="">
-				{audioURLs.map((audioURL, k) => <AudioPlayer key={k} {...{audioURL}} />)}
+				{recordedAudios.map((audio, k) => <AudioPlayer key={k} {...{audio}} />)}
 			</footer>
 		</section>
 	);

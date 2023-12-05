@@ -1,16 +1,17 @@
+import { AudioRecording } from "../../../../data/data";
 
 
 
 interface AudioPlayerProps {
-	audioURL: string
+	audio: AudioRecording
 }
 
-export default function AudioPlayer ({audioURL}: AudioPlayerProps) {
+export default function AudioPlayer ({audio}: AudioPlayerProps) {
 	return (
 		<section>
-			<audio src={audioURL} controls className="mx-auto"></audio>
+			<audio src={audio.url} controls className="mx-auto"></audio>
 			<section>
-				<a className="button" download href={audioURL}>Download Recording</a>
+				<a className="button" download href={audio.url}>Download Recording</a>
 			</section>
 		</section>
 	);
