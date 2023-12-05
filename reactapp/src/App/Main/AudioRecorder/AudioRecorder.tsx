@@ -33,9 +33,16 @@ export default function AudioRecorder () {
 		}
 	};
 
+	const giveUpMicrophonePermission = async () => {
+		if (stream) {
+			stream.getTracks().forEach(track => track.stop());
+			setStream(null);
+			setPermission(false);
+		}
+	};
+
 	const startRecording = async () => {
 		setRecordingStatus("recording");
-		console.log(`Recording was started: ${Date.now()}`);
 		setStartTimeMs(Date.now());
 		if (!stream) return;
 
@@ -65,7 +72,6 @@ export default function AudioRecorder () {
 				const audioURL = URL.createObjectURL(audioBlob);
 				const blobSize = audioBlob.size;
 				const endTimeMs = Date.now();
-				console.log(`Recording was stopped: ${endTimeMs}`);
 
 				setRecordedAudios(audios => [...audios, {
 					blobSize, startTimeMs, endTimeMs,
@@ -93,7 +99,9 @@ export default function AudioRecorder () {
 
 			<section className="max-w-5xl mx-auto py-4">
 				<section className="">
-					{permission || <button className="button" onClick={getMicrophonePermission} type="button">Get Microphone</button>}
+					{permission || <button className="button" onClick={getMicrophonePermission} type="button">Get Mic</button>}
+					{permission && recordingStatus === "inactive" && <button className="button" onClick={giveUpMicrophonePermission} type="button">Give Up Mic</button>}
+
 					{permission && recordingStatus === "inactive" && <button className="button" onClick={startRecording} type="button">Start Recording</button>}
 					{recordingStatus === "recording" && <button className="button" onClick={stopRecording} type="button">Stop Recording</button>}
 				</section>

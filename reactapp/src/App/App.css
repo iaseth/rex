@@ -19,5 +19,5 @@ h6, .h6, .p6 { @apply text-xs; }
 .H6, .P6 { @apply text-3xl; }
 
 .button {
-	@apply block font-bold bg-blue-600 text-white text-center px-6 py-3 border-y-2 border-blue-800 rounded shadow hover:bg-blue-700;
+	@apply block font-bold bg-blue-600 text-white text-center px-6 py-3 mb-2 mr-2 border-y-2 border-blue-800 rounded shadow hover:bg-blue-700;
 }
