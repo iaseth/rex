@@ -63,12 +63,13 @@ export default function AudioRecorder () {
 			mediaRecorder.current.onstop = () => {
 				const audioBlob = new Blob(audioChunks, { type: mimeType });
 				const audioURL = URL.createObjectURL(audioBlob);
+				const blobSize = audioBlob.size;
 				const endTimeMs = Date.now();
 				console.log(`Recording was stopped: ${endTimeMs}`);
 
 				setRecordedAudios(audios => [...audios, {
+					blobSize, startTimeMs, endTimeMs,
 					lengthMs: endTimeMs - startTimeMs,
-					startTimeMs, endTimeMs,
 					url: audioURL
 				}]);
 				setAudioChunks([]);

@@ -2,8 +2,9 @@
 
 
 export interface AudioRecording {
-	lengthMs: number,
+	blobSize: number,
 	startTimeMs: number,
 	endTimeMs: number,
+	lengthMs: number,
 	url: string,
 }
