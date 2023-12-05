@@ -25,7 +25,7 @@ export default function AudioPlayer ({
 
 			<footer className="">
 				<h4>
-					<a className="button" download href={audio.url}>Download WebM</a>
+					<a className="button" download={audio.name} href={audio.url}>Download WebM</a>
 				</h4>
 				<button className="button" onClick={deleteRecording}>Delete</button>
 			</footer>
