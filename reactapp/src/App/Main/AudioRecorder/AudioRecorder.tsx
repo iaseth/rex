@@ -13,6 +13,7 @@ export default function AudioRecorder () {
 	const [stream, setStream] = React.useState<MediaStream|null>(null);
 	const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
 
+	const [startTimeMs, setStartTimeMs] = React.useState(0);
 	const [recordedAudios, setRecordedAudios] = React.useState<AudioRecording[]>([]);
 
 	const getMicrophonePermission = async () => {
@@ -34,6 +35,8 @@ export default function AudioRecorder () {
 
 	const startRecording = async () => {
 		setRecordingStatus("recording");
+		console.log(`Recording was started: ${Date.now()}`);
+		setStartTimeMs(Date.now());
 		if (!stream) return;
 
 		const media = new MediaRecorder(stream, { mimeType: mimeType });
@@ -53,13 +56,21 @@ export default function AudioRecorder () {
 
 	const stopRecording = () => {
 		setRecordingStatus("inactive");
+
 		if (mediaRecorder.current) {
 			mediaRecorder.current.stop();
 
 			mediaRecorder.current.onstop = () => {
 				const audioBlob = new Blob(audioChunks, { type: mimeType });
 				const audioURL = URL.createObjectURL(audioBlob);
-				setRecordedAudios(a => [...a, {lengthMs: 0, url: audioURL}]);
+				const endTimeMs = Date.now();
+				console.log(`Recording was stopped: ${endTimeMs}`);
+
+				setRecordedAudios(audios => [...audios, {
+					lengthMs: endTimeMs - startTimeMs,
+					startTimeMs, endTimeMs,
+					url: audioURL
+				}]);
 				setAudioChunks([]);
 			};
 		}
