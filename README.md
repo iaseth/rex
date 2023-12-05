@@ -55,9 +55,9 @@ You can view the source file [here](https://github.com/iaseth/vite-react-ts-star
 ## Package details
 | `Name`         | `Value`   |
 | -------------- | --------- |
-| `Name`         | `starter` |
+| `Name`         | `rex`     |
 | `Version`      | `0.0.0`   |
-| `Dependencies` | `2`       |
+| `Dependencies` | `3`       |
 
 
 
@@ -66,6 +66,7 @@ You can view the source file [here](https://github.com/iaseth/vite-react-ts-star
 | --- | ----------- | ----------- |
 | 1   | `react`     | `^18.2.0`   |
 | 2   | `react-dom` | `^18.2.0`   |
+| 3   | `timenames` | `^0.5.0`    |
 
 
 
