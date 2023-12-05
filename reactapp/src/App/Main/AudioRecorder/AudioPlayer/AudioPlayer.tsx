@@ -3,10 +3,13 @@ import { AudioRecording } from "../../../../data/data";
 
 
 interface AudioPlayerProps {
-	audio: AudioRecording
+	audio: AudioRecording,
+	deleteRecording: () => void,
 }
 
-export default function AudioPlayer ({audio}: AudioPlayerProps) {
+export default function AudioPlayer ({
+	audio, deleteRecording
+}: AudioPlayerProps) {
 	return (
 		<section className="px-3 py-3 bg-white border border-zinc-300 rounded">
 			<header>
@@ -23,6 +26,7 @@ export default function AudioPlayer ({audio}: AudioPlayerProps) {
 				<h4>
 					<a className="button" download href={audio.url}>Download WebM</a>
 				</h4>
+				<button className="button" onClick={deleteRecording}>Delete</button>
 			</footer>
 		</section>
 	);

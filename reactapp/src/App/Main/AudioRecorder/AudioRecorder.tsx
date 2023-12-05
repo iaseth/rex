@@ -77,6 +77,14 @@ export default function AudioRecorder () {
 		}
 	};
 
+	const deleteRecording = (startTimeMs: number) => {
+		const idx = recordedAudios.findIndex(audio => audio.startTimeMs === startTimeMs);
+		if (idx !== -1) {
+			URL.revokeObjectURL(recordedAudios[idx].url);
+			setRecordedAudios(audios => audios.filter(audio => audio.startTimeMs !== startTimeMs));
+		}
+	};
+
 	return (
 		<section>
 			<header>
@@ -92,7 +100,10 @@ export default function AudioRecorder () {
 			</section>
 
 			<footer className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-				{recordedAudios.map((audio, k) => <AudioPlayer key={k} {...{audio}} />)}
+				{recordedAudios.map(audio => <AudioPlayer key={audio.startTimeMs}
+					audio={audio}
+					deleteRecording={() => deleteRecording(audio.startTimeMs)}
+				/>)}
 			</footer>
 		</section>
 	);
