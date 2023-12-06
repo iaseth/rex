@@ -66,7 +66,7 @@ You can view the source file [here](https://github.com/iaseth/vite-react-ts-star
 | --- | ----------- | ----------- |
 | 1   | `react`     | `^18.2.0`   |
 | 2   | `react-dom` | `^18.2.0`   |
-| 3   | `timenames` | `^0.5.0`    |
+| 3   | `timenames` | `^1.0.0`    |
 
 
 
